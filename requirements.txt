@@ -1,1 +1,15 @@
-
+streamlit
+pandas
+numpy
+matplotlib
+seaborn
+plotly
+scikit-learn
+yfinance
+scipy
+requests
+python-dateutil
+scipy
+openpyxl
+lxml
+html5lib
