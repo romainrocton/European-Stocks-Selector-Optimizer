@@ -6,7 +6,7 @@ import streamlit as st
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
-
+#function returning a list of companies (names and tickers) composing an index from a website
 def extract_index_components(wiki_url, index_name):
     headers = {"User-Agent": "PortfolioApp/1.0 (contact@example.com)"}
     response = requests.get(wiki_url, headers=headers)
@@ -28,13 +28,11 @@ def extract_index_components(wiki_url, index_name):
 
 
 @st.cache_data(ttl=86400)
+#function returning (ticker, t, corpo): 
+# - tickers: list of unique tickers
+# - t: concatenated tickers (possibly with suffixes if missing from the website)
+# - corpo: concatenated company names
 def extract_corpos(indices):
-    """
-    returns (tickers, t, corpo) similar to original notebook:
-      - tickers: list of unique tickers
-      - t: concatenated tickers (possibly with suffixes)
-      - corpo: concatenated company names
-    """
     cac40_name = dax40_name = aex25_name = ibex35_name = ftsemib_name = []
     cac40_ticker = dax40_ticker = aex25_ticker = ibex35_ticker = ftsemib_ticker = []
 
@@ -77,6 +75,7 @@ def extract_corpos(indices):
 
 
 @st.cache_data(ttl=86400)
+#function returning a list of tickers for which we have at least "years" of data
 def old_tickers(years, tick):
     """Keep only tickers that have first date <= years ago"""
     today = date.today()
@@ -96,6 +95,7 @@ def old_tickers(years, tick):
 
 
 @st.cache_data(ttl=86400)
+#function returning a list of tickers for which the currency is EUR
 def EUR_tickers(tick):
     good = []
     for t in tick:
@@ -107,7 +107,8 @@ def EUR_tickers(tick):
             continue
     return good
 
-
+#function returning a list of tickers for which we have at least 30 years of data. Used after calling old_ticker(). 
+#We want to return a list of ticker for which we have at least "years" of data and maximum 30 years of data.
 @st.cache_data(ttl=86400)
 def extract_data(valid_tickers):
     if not valid_tickers:
