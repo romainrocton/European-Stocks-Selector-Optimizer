@@ -19,7 +19,7 @@ THEME_COLORS: Final[dict[str, str]] = {
 }
 
 
-# Dictionary mapping indices to their countries
+# Dictionary mapping indices to their countries to ease the printing of regional exposition for each index selected
 
 dico_pays={}
 dico_pays["CAC 40"]="France"    
@@ -28,7 +28,7 @@ dico_pays["AEX 25"]="Netherlands"
 dico_pays["IBEX 35"]="Spain"
 dico_pays["FTSE MIB"]="Italy"
 
-# Dictionary mapping stocks to their sectors
+# Dictionary mapping stocks to their sectors to ease the printing of sectorial exposition for a portfolio.
 file_path = os.path.join("sectors", "Sectors.xlsx")
 df_sectors = pd.read_excel(file_path)
 nb_total_assets=df_sectors.shape[0]
