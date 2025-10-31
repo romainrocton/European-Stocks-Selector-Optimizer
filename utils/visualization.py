@@ -187,7 +187,8 @@ def Portfolio_presentation(type_name, weights, assets_names, used_returns, used_
              value=f"{portfolio_annualized_sharpe:.2f}",
              help="Ratio of expected return to volatility (Sharpe ratio); higher values indicate better risk-adjusted performance."
              )
-
+    st.markdown("<span style='color:#1FC5A3'><b><i>Disclaimer</i></b><i> - Historical returns are provided for informational purposes only and do not guarantee, or even reliably predict, future performance.</i></span>", unsafe_allow_html=True)
+    
     # -------------------------------
     # Table of weights
     weights_tabledisplay(weights,assets_names)
