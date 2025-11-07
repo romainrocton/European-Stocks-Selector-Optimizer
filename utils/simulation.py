@@ -9,10 +9,12 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import pandas as pd
 
+#function returning a sample of original data
 def bootstrap(returns):
     return resample(returns, replace=True, n_samples=None)
 
-
+#function computing an efficient frontier composed of 20 portfolios given a selection of assets.
+#It returns the weights matrix of these 20 portfolios and a vector with mean and the volatility of each portfolio.
 def efficient_frontier(mean, sigma, truemean, truesigma, nb_assets):
     # This mirrors the logic of your original notebook
     weights_matrix = np.zeros((20, nb_assets + 2))
@@ -43,6 +45,8 @@ def efficient_frontier(mean, sigma, truemean, truesigma, nb_assets):
         v[0, 2 * i + 1] = sig_ro_RS
     return weights_matrix, v
 
+#Simulate different efficient frontiers based on 250 bootstrapped returns for the assets selected. 
+#Method based on Font's Research Paper: once all bootstrapped samples are computed, we can compute the different efficient frontiers and return the clusteroid efficient frontier.
 @st.cache_data(ttl=86400)
 def simul_EF(returns, mean, cov, nb_assets):
     nb_simul = 250
@@ -71,6 +75,7 @@ def simul_EF(returns, mean, cov, nb_assets):
     # return dictionnary containing all portfolios of the efficient frontier
     return ptf
 
+#Function returning the weights of the simulated portfolio wanted by the user, based on what he selected on the interface.
 def portfolio_selector(type_selection, returns_df,true_mean,true_cov,nb_assets,target=0):
     
     #launching simulation
@@ -114,7 +119,8 @@ def portfolio_selector(type_selection, returns_df,true_mean,true_cov,nb_assets,t
     else:
         raise TypeError("Wrong type input, should be Sample_on_frontier, Max_Sharpe or Target_return")
         
-
+#Simulates multiple portfolio optimizations using bootstrapped samples of historical returns,
+#then identifies the 'clusteroid' portfolio — the most representative one among all simulations.
 @st.cache_data(ttl=86400)
 def simul_Single_PTF(type,returns, mean, cov, nb_assets,targetreturn=0,rf=0):
     
