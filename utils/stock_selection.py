@@ -1,6 +1,8 @@
 import streamlit as st
 from utils.config import dico_pays
 
+#the user can choose the stocks that interest him and on which he wants to run optimizations.
+#It returns a list with the stocks selected by the user
 def stock_selection_page(indices, index_to_actions):
 # UI: stock selection
     
