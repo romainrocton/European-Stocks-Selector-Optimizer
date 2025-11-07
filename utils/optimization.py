@@ -2,7 +2,7 @@
 import numpy as np
 import scipy.optimize as opt
 
-
+#function computing the optimal weights for the Targeted Return (ro) Portfolio
 def port_minvol_ro(mean, cov, ro):
     def objective(W, R, C, ro):
         varp = np.dot(np.dot(W.T, cov), W)
@@ -19,7 +19,7 @@ def port_minvol_ro(mean, cov, ro):
     optimized = opt.minimize(objective, W, (mean, cov, ro), method="SLSQP", constraints=c_, bounds=b_, options={"maxiter": 100, "ftol": 1e-08})
     return optimized.x
 
-
+#function computing the optimal weights for the Minimum Volatility Portfolio
 def port_minvol(mean, cov):
     def objective(W, R, C):
         varp = np.dot(np.dot(W.T, cov), W)
@@ -33,7 +33,7 @@ def port_minvol(mean, cov):
     optimized = opt.minimize(objective, W, (mean, cov), method="SLSQP", constraints=c_, bounds=b_, options={"maxiter": 100, "ftol": 1e-08})
     return optimized.x
 
-
+#function computing the optimal weights for the Maximum Return Portfolio
 def port_maxret(mean, cov):
     def objective(W, R, C):
         meanp = np.dot(W.T, mean)
@@ -47,6 +47,7 @@ def port_maxret(mean, cov):
     optimized = opt.minimize(objective, W, (mean, cov), method="SLSQP", constraints=c_, bounds=b_, options={"maxiter": 100, "ftol": 1e-08})
     return optimized.x
 
+#function computing the optimal weights for the Maximum Sharpe Ratio Portfolio
 def port_maxsr(mean, cov, rf):
     def objective(W, R, C, rf):
         # calculate mean/variance of the portfolio
