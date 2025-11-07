@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import base64
 
+#Adds the logo of the company to the interface
 def add_logo(image_path:str):
 
     with open(image_path, "rb") as f:
