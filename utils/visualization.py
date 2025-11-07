@@ -10,6 +10,7 @@ import pandas as pd
 import altair as alt
 from utils.config import dico_sectors
 
+#Function returning a pie chart with the sectorial split of stocks in the optimized portfolio.
 def sectors(weights_ptf,asset_names):
     # Create reverse mapping: company → sector
     company_to_sector = {
@@ -56,7 +57,7 @@ def sectors(weights_ptf,asset_names):
 
     st.altair_chart(chart, use_container_width=True)
 
-
+#Function returning a table with the weights of stocks in the optimized portfolio.
 def weights_tabledisplay(weights_ptf,assets_names_ptf):
     df_table_R = pd.DataFrame({"Repartition": [f"{w:.2%}" for w in weights_ptf]}, index=assets_names_ptf)
     df_table_R.index.name = "Stock"
@@ -77,6 +78,7 @@ def weights_tabledisplay(weights_ptf,assets_names_ptf):
     st.subheader("Portfolio Repartition")
     st.markdown(html, unsafe_allow_html=True)
 
+#Function returning a chart with the historical performance of the optimized portfolio
 def performance_graph(cum_perf,horizon):
         df = cum_perf.reset_index()
         df.columns = ["Date", "Value"]
@@ -126,7 +128,7 @@ def performance_graph(cum_perf,horizon):
         
         st.altair_chart(chart, use_container_width=True)
        
-
+#Function returning a pie chart with the weights of each stock in the optimized portfolio
 def weights_graph(weights_ptf,asset_names):
         st.subheader("Portfolio Repartition")
         fig2, ax2 = plt.subplots(figsize=(8, 10))
@@ -155,6 +157,7 @@ def weights_graph(weights_ptf,asset_names):
 
         st.altair_chart(chart, use_container_width=True)
 
+#Displays a full Streamlit dashboard for visualizing the outputs of a portfolio (return, vol, return/risk ratio), its historical performance for a given time period and its composition.
 def Portfolio_presentation(type_name, weights, assets_names, used_returns, used_px):
     today = date.today()
 
